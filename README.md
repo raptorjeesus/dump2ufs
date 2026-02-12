@@ -75,6 +75,9 @@ docker run -it --rm \
 - Automatically detects optimal block/fragment sizes
 - Auto-generates UFS labels from game title and ID
 
+**Note**: see below on how one can convert RAR archives to UFS2 on Windows without extracting them first, similarly to the Docker version above.
+
+
 ### Requirements
 
 - Windows 10/11
@@ -118,6 +121,50 @@ powershell -ExecutionPolicy Bypass -File .\makefs.ps1 -i "C:\Games\PPSA00000-app
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\makefs.ps1 -i "C:\Games\PPSA00000-app" -o "game.ffpkg" -u "C:\Tools\UFS2Tool.exe"
 ```
+
+### Converting archives directly on Windows (optional)
+
+To mount RAR/RAR5 archives directly as a folder in Windows, without extracting them first, set up rar2fs:
+
+1. Install [WinFsp](https://winfsp.dev/rel/) (latest stable release)
+2. Install [Cygwin](https://www.cygwin.com/) with packages: `gcc-g++`, `make`, `autoconf`, `automake`, `git`, `wget`, `tar`
+3. **Open a Cygwin terminal** and run the following commands:
+
+   Install cygfuse (FUSE for Cygwin, included with WinFsp):
+   ```bash
+   sh "$(cat /proc/registry32/HKEY_LOCAL_MACHINE/SOFTWARE/WinFsp/InstallDir | tr -d '\0')"/opt/cygfuse/install.sh
+   ```
+4. Download and compile [UnRAR source](https://www.rarlab.com/rar_add.htm) v7.x.x:
+   ```bash
+   wget -O - https://www.rarlab.com/rar/unrarsrc-7.2.4.tar.gz | tar -xz
+   cd unrar
+   # Add -fPIC flag for 64-bit compatibility as per Q 1.7. in rar2fs wiki
+   sed -i 's/^CXXFLAGS=-O2/CXXFLAGS=-O2 -fPIC/' makefile
+   make lib
+   make install-lib
+   cd ..
+   ```
+5. Download and compile [rar2fs](https://github.com/hasse69/rar2fs/releases/):
+   ```bash
+   wget -O - https://github.com/hasse69/rar2fs/archive/refs/tags/v1.29.7.tar.gz | tar -xz
+   cd rar2fs-1.29.7
+   autoreconf -f -i
+   ./configure
+   make
+   make install
+   cd ..
+   ```
+6. Mount your archive as a folder (using /cygdrive/ paths for Windows compatibility):
+   ```bash
+   mkdir -p /cygdrive/c/temp/archive
+   rar2fs /cygdrive/c/path/to/archive.rar /cygdrive/c/temp/archive
+   ```
+7. **(In a Windows terminal)** Use the mounted path with the PowerShell script:
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File .\dump2ufs.ps1 -u "C:\Tools\UFS2Tool.exe" -i "C:\temp\archive" -o "game.ffpkg"
+   ```
+
+**Note:** This setup is advanced. For simpler usage, extract the archive first, then use this script on the extracted directory.
 
 
 ---
