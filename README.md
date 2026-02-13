@@ -6,6 +6,19 @@ Available in two versions:
 - **Docker version**: Cross-platform, supports both directories and archives
 - **Windows version**: Native PowerShell script, directory input only
 
+## Table of Contents
+
+- [Docker version](#docker-version)
+  - [Features](#features)
+  - [Requirements](#requirements)
+  - [Usage](#usage)
+- [Windows version](#windows-version)
+  - [Features](#features-1)
+  - [Requirements](#requirements-1)
+  - [Usage](#usage-1)
+  - [Converting archives directly on Windows (optional)](#converting-archives-directly-on-windows-optional)
+- [Thanks to](#thanks-to)
+
 ---
 
 ## Docker version
@@ -86,7 +99,7 @@ docker run -it --rm \
 
 ### Usage
 
-Download `dump2ufs.ps1` and place it in a convenient location. Ensure `UFS2Tool.exe` is available.
+Download [`dump2ufs.ps1`](https://github.com/raptorjeesus/dump2ufs/releases) and place it in a convenient location. Ensure `UFS2Tool.exe` is available.
 
 #### Command-line options
 
