@@ -41,7 +41,7 @@ Available in two versions:
 docker run -it --rm \
   -v /path/to/game/:/input/ \
   -v /path/to/output/:/output/ \
-  ghcr.io/raptorjeesus/dump2ufs:latest -i /input/ -o game.ffpkg
+  ghcr.io/raptorjeesus/dump2ufs -i /input/ -o game.ffpkg
 ```
 
 #### Archive input (requires FUSE)
@@ -51,7 +51,7 @@ docker run -it --rm \
   --device /dev/fuse --cap-add SYS_ADMIN \
   -v /path/to/game.rar:/game.rar \
   -v /path/to/output/:/output/ \
-  ghcr.io/raptorjeesus/dump2ufs:latest -i /game.rar -o game.ffpkg
+  ghcr.io/raptorjeesus/dump2ufs -i /game.rar -o game.ffpkg
 ```
 
 #### With optional parameters
@@ -60,7 +60,7 @@ docker run -it --rm \
 docker run -it --rm \
   -v /path/to/game/:/input/ \
   -v /path/to/output:/output/ \
-  ghcr.io/raptorjeesus/dump2ufs:latest -i /input/ -l "My_Game-01245" -y -o game.ffpkg
+  ghcr.io/raptorjeesus/dump2ufs -i /input/ -l "My_Game-01245" -y -o game.ffpkg
 ```
 
 ---
@@ -86,7 +86,7 @@ docker run -it --rm \
 
 ### Usage
 
-Download `makefs.ps1` and place it in a convenient location. Ensure `UFS2Tool.exe` is available.
+Download `dump2ufs.ps1` and place it in a convenient location. Ensure `UFS2Tool.exe` is available.
 
 #### Command-line options
 
@@ -101,25 +101,25 @@ Download `makefs.ps1` and place it in a convenient location. Ensure `UFS2Tool.ex
 #### Basic usage
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\makefs.ps1 -InputPath "C:\Games\PPSA00000-app" -o "game.ffpkg"
+powershell -ExecutionPolicy Bypass -File .\dump2ufs.ps1 -InputPath "C:\Games\PPSA00000-app" -o "game.ffpkg"
 ```
 
 #### With short aliases
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\makefs.ps1 -i "C:\Games\PPSA00000-app" -o "game.ffpkg"
+powershell -ExecutionPolicy Bypass -File .\dump2ufs.ps1 -i "C:\Games\PPSA00000-app" -o "game.ffpkg"
 ```
 
 #### With custom label and skip confirmation
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\makefs.ps1 -i "C:\Games\PPSA00000-app" -o "game.ffpkg" -l "My_Game-01245" -y
+powershell -ExecutionPolicy Bypass -File .\dump2ufs.ps1 -i "C:\Games\PPSA00000-app" -o "game.ffpkg" -l "My_Game-01245" -y
 ```
 
 #### Specifying UFS2Tool.exe path
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\makefs.ps1 -i "C:\Games\PPSA00000-app" -o "game.ffpkg" -u "C:\Tools\UFS2Tool.exe"
+powershell -ExecutionPolicy Bypass -File .\dump2ufs.ps1 -i "C:\Games\PPSA00000-app" -o "game.ffpkg" -u "C:\Tools\UFS2Tool.exe"
 ```
 
 ### Converting archives directly on Windows (optional)
